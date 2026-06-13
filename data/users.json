@@ -1,0 +1,14 @@
+{
+  "name": "users",
+  "records": {
+    "doc_01": {
+      "id": "doc_01",
+      "data": {
+        "cgpa": "9.18",
+        "city": "Bijnor",
+        "name": "Ujjwal Kumar",
+        "role": "Backend Engineer"
+      }
+    }
+  }
+}

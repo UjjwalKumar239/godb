@@ -1,0 +1,2 @@
+{"timestamp":"2026-06-13T04:19:33.8068803+05:30","operation":"CREATE_TABLE","table":"users"}
+{"timestamp":"2026-06-13T04:20:01.4528946+05:30","operation":"INSERT","table":"users","record_id":"doc_01","data":{"cgpa":"9.18","city":"Bijnor","name":"Ujjwal Kumar","role":"Backend Engineer"}}
