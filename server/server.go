@@ -54,12 +54,13 @@ func Start(addr string) {
 	})
 
 	// Routes
-	http.HandleFunc("/tables", handleTables)
-	http.HandleFunc("/tables/", handleTableOps)
-	http.HandleFunc("/query", handleQuery)
-	http.HandleFunc("/index", handleIndex)
-	http.HandleFunc("/wal", handleWAL)
-	http.HandleFunc("/health", handleHealth)
+	
+	http.HandleFunc("/tables", withCORS(handleTables))
+	http.HandleFunc("/tables/", withCORS(handleTableOps))
+	http.HandleFunc("/query", withCORS(handleQuery))
+	http.HandleFunc("/index", withCORS(handleIndex))
+	http.HandleFunc("/wal", withCORS(handleWAL))
+	http.HandleFunc("/health", withCORS(handleHealth))
 
 	fmt.Printf("🌐 GoDB HTTP Server running on %s\n", addr)
 	fmt.Println("📖 Endpoints:")
@@ -77,6 +78,19 @@ func Start(addr string) {
 	if err := http.ListenAndServe(addr, nil); err != nil {
 		panic(err)
 	}
+}
+
+func withCORS(h http.HandlerFunc) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        w.Header().Set("Access-Control-Allow-Origin", "*")
+        w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+        w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+        if r.Method == http.MethodOptions {
+            w.WriteHeader(http.StatusOK)
+            return
+        }
+        h(w, r)
+    }
 }
 
 // handleHealth - GET /health
